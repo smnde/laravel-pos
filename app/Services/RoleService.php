@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Requests\StoreRoleRequest;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use App\Repositories\RoleRepository;
 
 class RoleService

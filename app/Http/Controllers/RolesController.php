@@ -13,6 +13,10 @@ class RolesController extends Controller
     public function __construct(RoleRepository $roleRepository)
     {
         $this->role = $roleRepository;
+        // $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index', 'store']]);
+        // $this->middleware('permission:role-create', ['only' => ['store']]);
+        // $this->middleware('permission:role-edit', ['only' => ['update']]);
+        // $this->middleware('permission:role-delete', ['only' => ['destroy']]);
     }
 
     public function index()

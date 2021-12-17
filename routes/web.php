@@ -25,7 +25,15 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles', RolesController::class);
-    Route::resource('users', UsersController::class);
+    Route::resource('users', UsersController::class)->except(['show']);
+    
+    Route::get('users/roles/{id}', [UsersController::class, 'roles'])->name('users.roles');
+    Route::put('users/roles/{id}', [UsersController::class, 'setRole'])->name('users.setRole');
+
+    Route::post('users/permission', [UsersController::class, 'storePermission'])->name('users.storePermission');
+    Route::get('users/role-permission', [UsersController::class, 'permission'])->name('users.permissions');
+    Route::put('users/permission/{role}', [UsersController::class, 'setPermission'])->name('users.setPermission');
+
     Route::resource('categories', CategoriesController::class);
     Route::resource('products', ProductsController::class);
 });

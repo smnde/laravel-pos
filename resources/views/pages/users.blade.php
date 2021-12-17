@@ -48,9 +48,17 @@
                                     <tr>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->username }}</td>
-                                        <td>Admin</td>
                                         <td>
-                                            <button class="btn btn-sm btn-danger">Hapus</button>
+                                            @foreach ($user->getRoleNames() as $role)
+                                                <label for="role" class="badge bg-success">{{ $role }}</label>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            <form action="{{ route('users.destroy', $user->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <a href="{{ route('users.roles', $user->id) }}" class="btn btn-sm btn-info">Set Role</a>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach

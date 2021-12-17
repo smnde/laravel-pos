@@ -22,4 +22,9 @@ class RoleRepository
     {
         return $this->role->where('id', $id)->firstOrFail();
     }
+
+    public function getByName($name)
+    {
+        return $this->role->where('name', $name)->firstOrFail();
+    }
 }

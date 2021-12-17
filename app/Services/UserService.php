@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class UserService
 {
@@ -41,4 +42,5 @@ class UserService
     {
         $this->user->getByID($id)->delete();
     }
+
 }
