@@ -12,7 +12,7 @@
                             <form action="{{ route('products.store') }}" method="post">
                                 @csrf
                                 <div class="mb-3">
-                                    <label for="category_id">Kategori</label>
+                                    <label for="category_id" class="form-label">Kategori</label>
                                     <select class="form-control" name="category_id">
                                         <option selected>Kategori</option>
                                         @foreach ($categories as $category)

@@ -21,7 +21,7 @@
                                     <input type="text" class="form-control" id="username" name="username">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="role">Role</label>
+                                    <label class="form-label" for="role">Role</label>
                                     <select class="form-control" name="role" id="role">
                                         <option selected>Pilih...</option>
                                         @foreach ($roles as $role)
