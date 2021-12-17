@@ -28,7 +28,7 @@ class UsersController extends Controller
     public function index()
     {
         $users = $this->user->getAll();
-        return view('pages.users', compact('users'));
+        return view('pages.users.index', compact('users'));
     }
     
     public function store(StoreUserRequest $request, USerService $service)
@@ -53,7 +53,7 @@ class UsersController extends Controller
     {
         $user = $this->user->getById($id);
         $roles = $this->role->getAll()->pluck('name');
-        return view('pages.set_role', compact('user', 'roles'));
+        return view('pages.users.set_role', compact('user', 'roles'));
     }
 
     public function setRole(Request $request, $id)
@@ -79,7 +79,7 @@ class UsersController extends Controller
                             ->where('role_id', $getRole->id)->get()->pluck('name')->all();
             $permissions = $this->permission->getAll()->pluck('name');
         }
-        return view('pages.permissions', compact('roles' ,'permissions', 'hasPermission'));
+        return view('pages.users.permissions', compact('roles' ,'permissions', 'hasPermission'));
     }
 
     public function storePermission(StorePermisisonRequest $request, PermissionService $service)

@@ -62,7 +62,7 @@
                                                         value="{{ $row }}"
                                                         {{ in_array($row, $hasPermission) ? 'checked' : '' }}
                                                     > {{ $row }} <br>
-                                                    @if($i++ % 3 == 0) <br> @endif
+                                                    @if($i++ % 4 == 0) <br> @endif
                                                 @endforeach
                                             </div>
                                         </div>
