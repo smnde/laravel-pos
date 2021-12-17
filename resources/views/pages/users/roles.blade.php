@@ -40,7 +40,12 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $role->name }}</td>
                                         <td>
-                                            <button class="btn btn-sm btn-danger">Hapus</button>
+                                            <form action="{{ route('roles.destroy', $role->id) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <a href="{{ route('users.edit', $role->id) }}" class="btn btn-sm btn-success">Edit</a>
+                                                <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach

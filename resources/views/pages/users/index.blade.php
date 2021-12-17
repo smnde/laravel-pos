@@ -3,7 +3,7 @@
     
     <div class="container">
         <div class="row">
-            @if(auth()->user()->can('tambah barang'))
+            @if(auth()->user()->can('tambah user'))
                 <div class="col-md-4 me-auto">
                     <div class="card">
                         <div class="card-header bg-primary">
@@ -19,7 +19,16 @@
                                 <div class="mb-3">
                                     <label for="username" class="form-label">Username</label>
                                     <input type="text" class="form-control" id="username" name="username">
-                                </div>                            
+                                </div>
+                                <div class="mb-3">
+                                    <label for="role">Role</label>
+                                    <select class="form-control" name="role" id="role">
+                                        <option selected>Pilih...</option>
+                                        @foreach ($roles as $role)
+                                            <option value="{{ $role->name }}">{{ ucwords($role->name) }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>                           
                                 <div class="mb-3">
                                     <label for="password" class="form-label">Password</label>
                                     <input type="password" class="form-control" id="password" name="password">
@@ -48,11 +57,11 @@
                             <tbody>
                                 @foreach ($users as $user)
                                     <tr>
-                                        <td>{{ $user->name }}</td>
-                                        <td>{{ $user->username }}</td>
+                                        <td>{{ ucwords($user->name) }}</td>
+                                        <td>{{ ucwords($user->username) }}</td>
                                         <td>
                                             @foreach ($user->getRoleNames() as $role)
-                                                <label for="role" class="badge bg-success">{{ $role }}</label>
+                                                <label for="role" class="badge bg-success">{{ ucwords($role) }}</label>
                                             @endforeach
                                         </td>
                                         <td>

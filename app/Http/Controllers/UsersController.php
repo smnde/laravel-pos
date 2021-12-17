@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePermisisonRequest;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Repositories\PermissionRepository;
 use App\Repositories\RoleRepository;
 use App\Repositories\UserRepository;
@@ -11,8 +12,6 @@ use App\Services\PermissionService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-// use Spatie\Permission\Models\Permission;
-// use Spatie\Permission\Models\Role;
 
 class UsersController extends Controller
 {
@@ -28,25 +27,32 @@ class UsersController extends Controller
     public function index()
     {
         $users = $this->user->getAll();
-        return view('pages.users.index', compact('users'));
+        $roles = $this->role->getAll();
+        return view('pages.users.index', compact('users', 'roles'));
     }
     
     public function store(StoreUserRequest $request, USerService $service)
     {
         $service->create($request->all());
-        return redirect()->back()->with('success', 'User baru berhasil ditambahkan');
+        return redirect()->route('users.index')->with('success', 'User baru berhasil ditambahkan');
     }
 
-    public function update(StoreUserRequest $request, UserService $service, $id)
+    public function edit($id)
+    {
+        $user = $this->user->getByID($id);
+        return view('pages.users.edit', compact('user'));
+    }
+
+    public function update(UpdateUserRequest $request, UserService $service, $id)
     {
         $service->update($request->all(), $id);
-        return response('success');
+        return redirect()->route('users.index')->with('success', 'User berhasil diubah');
     }
 
     public function destroy(UserService $service, $id)
     {
         $service->delete($id);
-        return response('success');
+        return redirect()->back()->with('success', 'User berhasil dihapus');
     }
 
     public function roles($id)

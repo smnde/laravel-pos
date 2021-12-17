@@ -24,6 +24,7 @@ class UserService
             'username' => $data['username'],
             'password' => Hash::make($data['password']),
         ]);
+        $user->assignRole($data['role']);
         return $user;
     }
 
@@ -33,7 +34,6 @@ class UserService
         $user->update([
             'name' => $data['name'],
             'username' => $data['username'],
-            'password' => Hash::make($data['password']),
         ]);
         return $user;
     }
