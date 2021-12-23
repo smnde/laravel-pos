@@ -21,7 +21,8 @@ class ProductService
             'name' => $data['name'],
             'category_id' => $data['category_id'],
             'stock' => 0,
-            'price' => $data['price'],
+            'purchase_price' => $data['purchase_price'],
+            'sales_price' => $data['sales_price'],
         ]);
         return $product;
     }
@@ -32,7 +33,8 @@ class ProductService
         $product->update([
             'name' => $data['name'],
             'category_id' => $data['category_id'],
-            'price' => $data['price'],
+            'purchase_price' => $data['purchase_price'],
+            'sales_price' => $data['sales_price'],
         ]);
         return $product;
     }

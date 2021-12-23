@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\PurchasesController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
@@ -38,5 +40,13 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('categories', CategoriesController::class);
     Route::resource('products', ProductsController::class);
 
+    Route::get('orders', [OrdersController::class, 'index'])->name('orders.index');
+    Route::post('orders/addproduct/{id}', [OrdersController::class, 'addProduct'])->name('orders.addProduct');
+    Route::post('orders/removeproduct/{id}', [OrdersController::class, 'removeProduct'])->name('orders.removeProduct');
+    Route::post('orders/increase/{id}', [OrdersController::class, 'increase']);
+    Route::post('orders/decrease/{id}', [OrdersController::class, 'decrease']);
+    Route::post('orders/save', [OrdersController::class, 'save'])->name('orders.save');
+    Route::post('orders/clear', [OrdersController::class, 'clearCart'])->name('orders.clear');
+    
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 });

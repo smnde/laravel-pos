@@ -16,6 +16,7 @@
                                     <th>Kode</th>
                                     <th>Nama</th>
                                     <th>Stok</th>
+                                    <th>Modal</th>
                                     <th>Harga</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -27,7 +28,8 @@
                                         <td>{{ Strtoupper($product->code) }}</td>
                                         <td>{{ ucwords($product->name) }}</td>
                                         <td>{{ $product->stock }}</td>
-                                        <td>{{ $product->price }}</td>
+                                        <td>{{ $product->purchase_price }}</td>
+                                        <td>{{ $product->sales_price }}</td>
                                         <td>
                                             <form action="{{ route('products.destroy', $product->id) }}" method="POST">
                                                 @csrf

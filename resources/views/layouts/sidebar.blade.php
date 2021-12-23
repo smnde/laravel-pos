@@ -52,12 +52,12 @@
                 <ul id="forms" class="sidebar-dropdown list-unstyled collapse " data-parent="#sidebar">
                     @role('admin')
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ url('orders') }}">Pembelian</a>
+                            <a class="sidebar-link" href="{{ route('orders.index') }}">Pembelian</a>
                         </li>
                     @endrole
                     @role('kasir')
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ url('transactions') }}">Penjualan</a>
+                            <a class="sidebar-link" href="{{ route('sales.index') }}">Penjualan</a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="forms-basic-inputs.html">Pengembalian</a>
