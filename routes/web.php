@@ -6,6 +6,7 @@ use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\PurchasesController;
 use App\Http\Controllers\RolesController;
+use App\Http\Controllers\SalesController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -47,6 +48,12 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('orders/decrease/{id}', [OrdersController::class, 'decrease']);
     Route::post('orders/save', [OrdersController::class, 'save'])->name('orders.save');
     Route::post('orders/clear', [OrdersController::class, 'clearCart'])->name('orders.clear');
+
+    Route::get('sales', [SalesController::class, 'index'])->name('sales.index');
+    Route::post('sales/addproduct/{id}', [SalesController::class, 'addProduct'])->name('sales.addProduct');
+    Route::post('sales/save', [SalesController::class, 'save'])->name('sales.save');
+    Route::post('sales/removeproduct/{id}', [SalesController::class, 'removeProduct'])->name('sales.removeProduct');
+    Route::post('sales/clear', [SalesController::class, 'clearCart'])->name('sales.clear');
     
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 });

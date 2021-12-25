@@ -58,11 +58,11 @@ return [
 
         'integer' => true,
 
-        'decimals' => false,
+        'decimals' => 0,
 
-        'decimal_point' => false,
+        'decimal_point' => 0,
 
-        'thousand_seperator' => false
+        'thousand_seperator' => 0
 
     ],
 
