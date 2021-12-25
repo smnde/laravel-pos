@@ -17,7 +17,7 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->string('invoice')->unique();
             $table->unsignedBigInteger('user_id');
-            $table->date('date');
+            $table->bigInteger('total');
             $table->timestamps();
         });
     }

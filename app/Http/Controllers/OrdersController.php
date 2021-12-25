@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreOrderDetailRequest;
+use App\Http\Requests\StoreOrderRequest;
 use App\Models\Helper;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Repositories\ProductRepository;
-use Illuminate\Http\Request;
+use App\Services\OrderDetailService;
+use App\Services\OrderService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Cart;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
 
 class OrdersController extends Controller
@@ -21,24 +25,6 @@ class OrdersController extends Controller
     {
         $this->product = $productRepository;
     }
-
-    // public function getAutoCode()
-    // {
-    //     $order = DB::table('orders')
-    //                 ->where('invoice', 'like', 'INV%')
-    //                 ->select('invoice')
-    //                 ->orderBy('invoice', 'ASC')->first();
-
-    //     if($order == null) {
-    //         return 'INV0000001';
-    //     } else {
-    //         $invoice = str_replace('INV', '', $order->invoice);
-    //         $invoice = (int) $invoice;
-    //         $invoice = Helper::autocode(++$invoice, 7);
-
-    //         return 'INV' . $invoice;
-    //     }
-    // }
 
     public function index()
     {
@@ -95,7 +81,7 @@ class OrdersController extends Controller
             $order = Order::create([
                 'invoice' => $request->invoice,
                 'user_id' => Auth::id(),
-                'date' => Date::now(),
+                'total' => $total,
             ]);
 
             foreach ($items as $item) {
@@ -104,7 +90,7 @@ class OrdersController extends Controller
                     'product_id' => $item['id'],
                     'price' => $item['price'],
                     'qty' => $item['qty'],
-                    'total' => (int) $total,
+                    'subtotal' => $item['subtotal'],
                 ]);
 
                 $products = $this->product->getById($item['id']);

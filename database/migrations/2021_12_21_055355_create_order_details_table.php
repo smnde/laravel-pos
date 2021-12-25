@@ -19,7 +19,7 @@ class CreateOrderDetailsTable extends Migration
             $table->unsignedBigInteger('product_id');
             $table->bigInteger('price');
             $table->bigInteger('qty');
-            $table->bigInteger('total');
+            $table->bigInteger('subtotal');
             $table->timestamps();
         });
     }

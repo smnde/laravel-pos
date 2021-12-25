@@ -68,7 +68,7 @@
                                 @forelse ($items as $item)
                                     <tr>
                                         <td>
-                                            <form onsubmit="this.closest('form').submit();return false;" action="{{ route('orders.removeProduct', $item->rowId) }}" method="post">
+                                            <form action="{{ route('orders.removeProduct', $item->rowId) }}" method="post">
                                                 @csrf
                                                 <button class="btn btn-sm btn-danger">Hapus</button>
                                             </form>
@@ -92,7 +92,7 @@
                                     </form>
                                 </td>
                                 <td colspan="2">
-                                    <button formtarget="saveOrders" class="btn btn-primary float-end">Simpan</button>
+                                    <button class="btn btn-primary float-end">Simpan</button>
                                 </td>
                             </tfoot>
                         </table>
