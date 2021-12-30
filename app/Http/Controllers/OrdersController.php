@@ -67,35 +67,35 @@ class OrdersController extends Controller
     public function save(Request $request)
     {
         DB::transaction(function() use($request) {
-            $items = Cart::content();
+            $cart = Cart::content();
             $total = Cart::total();
-
-            foreach ($items as $value) {
-                $item = [
-                    'id' => $value->id,
-                    'name' => $value->name,
-                    'qty' => $value->qty,
-                    'price' => $value->price,
-                    'subtotal' => $value->subtotal,
+            $items = $cart->map(function($item) {
+                return [
+                    'id' => $item->id,
+                    'qty' => $item->qty,
+                    'price' => $item->price,
+                    'subtotal' => (int)$item->subtotal,
                 ];
-            }
+            });
 
             $order = Order::create([
                 'invoice' => $request->invoice,
                 'user_id' => Auth::id(),
                 'total' => $total,
             ]);
+            
+            foreach ($items as $key => $item) {
+                OrderDetail::create([
+                    'order_id' => $order->id,
+                    'product_id' => $item['id'],
+                    'price' => $item['price'],
+                    'qty' => $item['qty'],
+                    'subtotal' => $item['subtotal'],
+                ]);    
 
-            OrderDetail::create([
-                'order_id' => $order->id,
-                'product_id' => $item['id'],
-                'price' => $item['price'],
-                'qty' => $item['qty'],
-                'subtotal' => $item['subtotal'],
-            ]);
-
-            $product = $this->product->getById($item['id']);
-            $product->update(['stock' => $product->stock + $item['qty']]);
+                $product = $this->product->getById($item['id']);
+                $product->update(['stock' => $product->stock + $item['qty']]);
+            }
 
             DB::commit();
             Cart::destroy();
