@@ -9,13 +9,11 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Repositories\ProductRepository;
-use App\Services\OrderDetailService;
-use App\Services\OrderService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Cart;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Date;
+use Exception;
 
 class OrdersController extends Controller
 {
@@ -66,15 +64,18 @@ class OrdersController extends Controller
 
     public function save(Request $request)
     {
-        DB::transaction(function() use($request) {
+        $total = Cart::total();
+
+        DB::beginTransaction();
+        try {
             $cart = Cart::content();
-            $total = Cart::total();
             $items = $cart->map(function($item) {
                 return [
                     'id' => $item->id,
+                    'name' => $item->name,
                     'qty' => $item->qty,
                     'price' => $item->price,
-                    'subtotal' => (int)$item->subtotal,
+                    'subtotal' => $item->subtotal,
                 ];
             });
 
@@ -83,23 +84,25 @@ class OrdersController extends Controller
                 'user_id' => Auth::id(),
                 'total' => $total,
             ]);
-            
+
             foreach ($items as $key => $item) {
-                OrderDetail::create([
+                $orderDetails[$key] = [
                     'order_id' => $order->id,
                     'product_id' => $item['id'],
-                    'price' => $item['price'],
                     'qty' => $item['qty'],
+                    'price' => $item['price'],
                     'subtotal' => $item['subtotal'],
-                ]);    
-
-                $product = $this->product->getById($item['id']);
-                $product->update(['stock' => $product->stock + $item['qty']]);
+                ];
+                $product = $this->product->getById($item['id'])->increment('stock', $item['qty']);
             }
+            OrderDetail::insert($orderDetails);
 
             DB::commit();
             Cart::destroy();
-        });
-        return redirect()->back();
+            return redirect()->back()->with('success', 'Transaksi berhasil');
+        } catch (\Exception $err) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Transaksi gagal');
+        }
     }
 }
