@@ -6,14 +6,25 @@
             <div class="col-md-12 mx-auto">
                 <div class="card">
                     <div class="card-header bg-primary">
-                        <button type="button" class="btn btn-info btn-lg" data-bs-toggle="modal" data-bs-target="#productModal">
-                            Cari Barang
-                        </button>
+                        <div class="row">
+                            <div class="col-md-4 me-auto">
+                                <button type="button" class="btn btn-info btn-lg" data-bs-toggle="modal" data-bs-target="#productModal">
+                                    Cari Barang
+                                </button>
+                            </div>
+                            <div class="col-md-4 ms-auto">
+                                <div class="mb-0">
+                                    <input type="text" name="date" id="date" class="form-control" disabled value="{{ date('d-m-Y') }}">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <form action="{{ route('purchases.save') }}" id="savepurchases" method="post">
                         @csrf
                         <div class="card-body">
-                            <div class="row">
+                    </form>
+                    
+                            {{-- <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="invoice" class="form-label">Invoice</label>
@@ -21,13 +32,9 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="date" class="form-label">Tanggal</label>
-                                        <input type="text" name="date" id="date" class="form-control" disabled>
-                                    </div>
+                                    
                                 </div>
-                            </div>
-                        </form>
+                            </div> --}}
                         <table class="table table-hover text-center">
                             <thead>
                                 <th>Aksi</th>

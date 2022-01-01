@@ -58,9 +58,9 @@ return [
 
         'integer' => true,
 
-        'decimals' => 0,
+        'decimals' => false,
 
-        'thousand_seperator' => 0
+        'thousand_seperator' => false,
 
     ],
 

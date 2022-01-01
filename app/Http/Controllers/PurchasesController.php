@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Cart;
 use Exception;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 class PurchasesController extends Controller
 {
@@ -64,6 +65,7 @@ class PurchasesController extends Controller
     public function save(Request $request)
     {
         $total = Cart::total();
+        
         DB::beginTransaction();
         try {
             $cart = Cart::content();
@@ -78,7 +80,7 @@ class PurchasesController extends Controller
             });
 
             $purchase = Purchase::create([
-                'invoice' => $request->invoice,
+                'invoice' => $invoice,
                 'user_id' => Auth::id(),
                 'total' => $total,
             ]);
