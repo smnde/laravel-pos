@@ -65,7 +65,13 @@ class PurchasesController extends Controller
     public function save(Request $request)
     {
         $total = Cart::total();
-        
+        $invoice = IdGenerator::generate([
+            'table' => 'purchases',
+            'length' => 10,
+            'prefix' => 'INV-',
+            'field' => 'invoice',
+        ]);
+
         DB::beginTransaction();
         try {
             $cart = Cart::content();
