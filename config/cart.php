@@ -60,8 +60,6 @@ return [
 
         'decimals' => 0,
 
-        'decimal_point' => 0,
-
         'thousand_seperator' => 0
 
     ],

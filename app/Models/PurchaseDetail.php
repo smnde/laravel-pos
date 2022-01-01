@@ -11,8 +11,13 @@ class PurchaseDetail extends Model
 
     protected $guarded = '';
 
-    public function purchases()
+    public function purchase()
     {
         return $this->belongsTo(Purchase::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
     }
 }

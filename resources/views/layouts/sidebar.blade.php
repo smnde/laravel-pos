@@ -52,7 +52,7 @@
                 <ul id="forms" class="sidebar-dropdown list-unstyled collapse " data-parent="#sidebar">
                     @role('admin')
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('orders.index') }}">Pembelian</a>
+                            <a class="sidebar-link" href="{{ route('purchases.index') }}">Pembelian</a>
                         </li>
                     @endrole
                     @role('kasir')

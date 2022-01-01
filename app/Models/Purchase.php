@@ -11,7 +11,7 @@ class Purchase extends Model
 
     protected $guarded = '';
 
-    public function purchase()
+    public function details()
     {
         return $this->hasMany(PurchaseDetail::class);
     }

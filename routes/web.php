@@ -2,9 +2,8 @@
 
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\OrdersController;
-use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\PurchasesController;
+use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\UsersController;
@@ -41,13 +40,13 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('categories', CategoriesController::class);
     Route::resource('products', ProductsController::class);
 
-    Route::get('orders', [OrdersController::class, 'index'])->name('orders.index');
-    Route::post('orders/addproduct/{id}', [OrdersController::class, 'addProduct'])->name('orders.addProduct');
-    Route::post('orders/removeproduct/{id}', [OrdersController::class, 'removeProduct'])->name('orders.removeProduct');
-    Route::post('orders/increase/{id}', [OrdersController::class, 'increase']);
-    Route::post('orders/decrease/{id}', [OrdersController::class, 'decrease']);
-    Route::post('orders/save', [OrdersController::class, 'save'])->name('orders.save');
-    Route::post('orders/clear', [OrdersController::class, 'clearCart'])->name('orders.clear');
+    Route::get('purchases', [PurchasesController::class, 'index'])->name('purchases.index');
+    Route::post('purchases/addproduct/{id}', [PurchasesController::class, 'addProduct'])->name('purchases.addProduct');
+    Route::post('purchases/removeproduct/{id}', [PurchasesController::class, 'removeProduct'])->name('purchases.removeProduct');
+    Route::post('purchases/increase/{id}', [PurchasesController::class, 'increase'])->name('purchases.increase');
+    Route::post('purchases/decrease/{id}', [PurchasesController::class, 'decrease'])->name('purchases.decrease');
+    Route::post('purchases/save', [PurchasesController::class, 'save'])->name('purchases.save');
+    Route::post('purchases/clear', [PurchasesController::class, 'clearCart'])->name('purchases.clear');
 
     Route::get('sales', [SalesController::class, 'index'])->name('sales.index');
     Route::post('sales/addproduct/{id}', [SalesController::class, 'addProduct'])->name('sales.addProduct');

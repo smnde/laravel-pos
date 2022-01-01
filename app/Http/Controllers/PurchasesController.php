@@ -2,20 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreOrderDetailRequest;
-use App\Http\Requests\StoreOrderRequest;
-use App\Models\Helper;
-use App\Models\Order;
-use App\Models\OrderDetail;
+use App\Models\Purchase;
+use App\Models\PurchaseDetail;
 use App\Models\Product;
 use App\Repositories\ProductRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Cart;
 use Illuminate\Http\Request;
+use Cart;
 use Exception;
 
-class OrdersController extends Controller
+class PurchasesController extends Controller
 {
     protected $product;
 
@@ -28,7 +25,7 @@ class OrdersController extends Controller
     {
         $products = $this->product->getAll();
         $items = Cart::content();
-        return view('pages.orders.index', compact('products', 'items'));
+        return view('pages.purchases.index', compact('products', 'items'));
     }
 
     public function addProduct($id)
@@ -52,20 +49,21 @@ class OrdersController extends Controller
 
     public function increase($rowId)
     {
-        Cart::update($rowId, ['qty' => +1]);
+        $item = Cart::get($rowId);
+        Cart::update($rowId, ['qty' => $item->qty + 1]);
         return redirect()->back();
     }
 
     public function decrease($rowId)
     {
-        Cart::update($rowId, ['qty' => -1]);
+        $item = Cart::get($rowId);
+        Cart::update($rowId, ['qty' => $item->qty - 1]);
         return redirect()->back();
     }
 
     public function save(Request $request)
     {
         $total = Cart::total();
-
         DB::beginTransaction();
         try {
             $cart = Cart::content();
@@ -79,15 +77,15 @@ class OrdersController extends Controller
                 ];
             });
 
-            $order = Order::create([
+            $purchase = Purchase::create([
                 'invoice' => $request->invoice,
                 'user_id' => Auth::id(),
                 'total' => $total,
             ]);
 
             foreach ($items as $key => $item) {
-                $orderDetails[$key] = [
-                    'order_id' => $order->id,
+                $details[$key] = [
+                    'purchase_id' => $purchase->id,
                     'product_id' => $item['id'],
                     'qty' => $item['qty'],
                     'price' => $item['price'],
@@ -95,12 +93,13 @@ class OrdersController extends Controller
                 ];
                 $product = $this->product->getById($item['id'])->increment('stock', $item['qty']);
             }
-            OrderDetail::insert($orderDetails);
+
+            PurchaseDetail::insert($details);
 
             DB::commit();
             Cart::destroy();
             return redirect()->back()->with('success', 'Transaksi berhasil');
-        } catch (\Exception $err) {
+        } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Transaksi gagal');
         }
