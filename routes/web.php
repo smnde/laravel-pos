@@ -53,6 +53,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('sales/save', [SalesController::class, 'save'])->name('sales.save');
     Route::post('sales/removeproduct/{id}', [SalesController::class, 'removeProduct'])->name('sales.removeProduct');
     Route::post('sales/clear', [SalesController::class, 'clearCart'])->name('sales.clear');
+    Route::post('sales/increase/{id}', [SalesController::class, 'increase'])->name('sales.increase');
+    Route::post('sales/decrease/{id}', [SalesController::class, 'decrease'])->name('sales.decrease');
     
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 });

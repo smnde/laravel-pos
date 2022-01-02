@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\ProductRepository;
-use Cart;
+use App\Models\Sale;
+use App\Models\SalesDetail;
 use Illuminate\Http\Request;
+use App\Repositories\ProductRepository;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
+use Exception;
+use Cart;
+use Auth;
+use DB;
 
 class SalesController extends Controller
 {
@@ -19,7 +25,13 @@ class SalesController extends Controller
     {
         $products = $this->product->getAll();
         $items = Cart::content();
-        return view('pages.sales.index', compact('products', 'items'));
+        $receipt = IdGenerator::generate([
+            'table' => 'sales',
+            'length' => 9,
+            'prefix' => 'SL-',
+            'field' => 'receipt',
+        ]);
+        return view('pages.sales.index', compact('products', 'items', 'receipt'));
     }
 
     public function addProduct($id)
@@ -43,32 +55,58 @@ class SalesController extends Controller
 
     public function increase($rowId)
     {
-        Cart::update($rowId, ['qty' => +1]);
+        $item = Cart::get($rowId);
+        Cart::update($rowId, ['qty' => $item->qty + 1]);
         return redirect()->back();
     }
 
     public function decrease($rowId)
     {
-        Cart::update($rowId, ['qty' => -1]);
+        $item = Cart::get($rowId);
+        Cart::update($rowId, ['qty' => $item->qty - 1]);
         return redirect()->back();
     }
 
     public function save(Request $request)
     {
-        DB::transaction(function() use($request) {
-            $total = Cart::total();
+        DB::beginTransaction();
+        try {
             $cart = Cart::content();
             $items = $cart->map(function($item) {
                 return [
                     'id' => $item->id,
+                    'name' => $item->name,
                     'qty' => $item->qty,
                     'price' => $item->price,
                     'subtotal' => $item->subtotal,
                 ];
             });
 
-            Cart::destroy();
+            $sale = Sale::create([
+                'receipt' => $request->receipt,
+                'user_id' => Auth::id(),
+                'total' => Cart::total(),
+            ]);
+
+            foreach ($items as $key => $item) {
+                $details[$key] = [
+                    'sales_id' => $sale->id,
+                    'product_id' => $item['id'],
+                    'qty' => $item['qty'],
+                    'price' => $item['price'],
+                    'subtotal' => $item['subtotal'],
+                ];
+
+                $product = $this->product->getById($item['id'])->decrement('stock', $item['qty']);
+            }
+            SalesDetail::insert($details);
+
             DB::commit();
-        });
+            Cart::destroy();
+            return redirect()->back();
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->back();
+        }
     }
 }

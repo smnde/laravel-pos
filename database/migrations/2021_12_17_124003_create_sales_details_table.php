@@ -19,6 +19,7 @@ class CreateSalesDetailsTable extends Migration
             $table->unsignedBigInteger('product_id');
             $table->bigInteger('price');
             $table->integer('qty');
+            $table->bigInteger('subtotal');
             $table->timestamps();
         });
     }

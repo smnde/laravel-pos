@@ -4,59 +4,26 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 me-auto">
-                {{-- <div class="card">
-                    <div class="card-header bg-primary">
-                        <h4 class="text-white">Barang</h4>
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-hover">
-                            <thead>
-                                <th>Nama</th>
-                                <th>Stok</th>
-                                <th>Aksi</th>
-                            </thead>
-                            <tbody>
-                                @foreach ($products as $product)
-                                    <form action="{{ route('orders.addProduct', $product->id) }}" method="post">
-                                        @csrf
-                                        <tr>
-                                            <td>{{ ucwords($product->name) }}</td>
-                                            <td>{{ $product->stock }}</td>
-                                            <td>
-                                                <button type="submit" class="btn btn-sm btn-primary">Tambah</button>
-                                            </td>
-                                        </tr>
-                                    </form>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div> --}}
-
                 <div class="card">
-                    <div class="card-header bg-primary">
-                        <button type="button" class="btn btn-info mb-3 btn-lg" data-bs-toggle="modal" data-bs-target="#productModal">
-                            Cari Barang
-                          </button>
-                    </div>
-                    <div class="card-body">
-                        <form action="{{ route('sales.save') }}" method="post">
+                    <form action="{{ route('sales.save') }}" method="post">
                         @csrf
+                        <div class="card-header bg-primary">
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="invoice" class="form-label">No struk</label>
-                                        <input type="text" name="invoice" id="invoice" class="form-control">
-                                    </div>
+                                <div class="col-md-4 me-auto">
+                                    <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#productModal">
+                                        Cari Barang
+                                    </button>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="date" class="form-label">Tanggal</label>
-                                        <input type="text" name="date" id="date" class="form-control" disabled>
+                                    <div class="input-group mb-0">
+                                        <input type="text" aria-label="Last name" class="form-control" disabled value="Tanggal : {{ date('d-m-Y') }}">
+                                        <input type="text" name="receipt" id="receipt" class="form-control" readonly value="{{ $receipt }}">
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                        </div>
+                        <div class="card-body">
+                    </form>
                         <table class="table table-hover table-stripped text-center">
                             <thead>
                                 <tr>
@@ -77,7 +44,23 @@
                                             </form>
                                         </td>
                                         <td>{{ ucwords($item->name) }}</td>
-                                        <td>{{ $item->qty }}</td>
+                                        <td>
+                                            <form action="{{ route('sales.decrease', $item->rowId) }}" method="post" class="d-inline">
+                                                @csrf
+                                                <button class="btn btn-sm btn-info">
+                                                    <i class="fas fa-minus"></i>
+                                                </button>
+                                            </form>
+
+                                            <a style="display: inline">{{ $item->qty }}</a>
+                                            
+                                            <form action="{{ route('sales.increase', $item->rowId) }}" method="post" class="d-inline">
+                                                @csrf
+                                                <button class="btn btn-sm btn-info">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                            </form>
+                                        </td>
                                         <td>{{ $item->price }}</td>
                                         <td>{{ $item->qty * $item->price }}</td>
                                     </tr>
