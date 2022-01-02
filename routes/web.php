@@ -26,6 +26,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::post('tes', function() {
+    return dd(request());
+})->name('tes');
+
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
