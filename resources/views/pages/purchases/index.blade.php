@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-12 mx-auto">
                 <div class="card">
-                    <form action="{{ route('purchases.save') }}" method="post">
+                    <form action="{{ route('purchases.save') }}" method="post" id="savePurchase">
                         @csrf
                         <div class="card-header bg-primary">
                             <div class="row">
@@ -22,8 +22,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body">
                     </form>
+                        <div class="card-body">
                         <table class="table table-hover text-center">
                             <thead>
                                 <th>Aksi</th>
@@ -76,7 +76,7 @@
                                     </form>
                                 </td>
                                 <td colspan="2">
-                                    <button class="btn btn-primary float-end">Simpan</button>
+                                    <button class="btn btn-primary float-end" formtarget="#savePurchase">Simpan</button>
                                 </td>
                             </tfoot>
                         </table>
