@@ -25,10 +25,11 @@ class ProductsController extends Controller
         return view('pages.products.index', compact('products', 'categories'));
     }
 
-    public function create()
+    public function create(ProductService $service)
     {
         $categories = $this->category->getAll();
-        return view('pages.products.create', compact('categories'));
+        $code = $service->autocode();
+        return view('pages.products.create', compact('categories', 'code'));
     }
 
     public function store(StoreProductRequest $request, ProductService $service)

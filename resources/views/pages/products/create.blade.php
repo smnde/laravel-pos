@@ -26,7 +26,7 @@
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="code" class="form-label">Kode barang</label>
-                                            <input type="text" class="form-control" id="code" name="code">
+                                            <input type="text" class="form-control" id="code" name="code" readonly value="{{ $code }}">
                                         </div>
                                     </div>
                                 </div>

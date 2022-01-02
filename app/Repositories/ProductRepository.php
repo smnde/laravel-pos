@@ -15,7 +15,7 @@ class ProductRepository
 
     public function getAll()
     {
-        return $this->product->get();
+        return $this->product->orderBy('code', 'ASC')->get();
     }
 
     public function getById($id)
