@@ -26,7 +26,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::group(['middleware' => 'auth'], function() {
+// Route::group(['middleware' => 'auth'], function() {
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
     Route::resource('/roles', RolesController::class);
@@ -57,4 +57,4 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/sales/clear', [SalesController::class, 'clearCart'])->name('sales.clear');
     Route::post('/sales/increase/{id}', [SalesController::class, 'increase'])->name('sales.increase');
     Route::post('/sales/decrease/{id}', [SalesController::class, 'decrease'])->name('sales.decrease');
-});
+// });
