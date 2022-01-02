@@ -28,17 +28,15 @@
                     <div class="card-body">
                         <form action="{{ route('login') }}" method="post">
                             @csrf
-                            <form>
-                                <div class="mb-3">
-                                    <label for="username" class="form-label">Username</label>
-                                    <input type="text" class="form-control" id="username" name="username">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="password" class="form-label">Password</label>
-                                    <input type="password" class="form-control" name="password" id="password">
-                                </div>
-                                <button type="submit" class="form-control btn btn-primary">Login</button>
-                              </form>
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="username" name="username">
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" name="password" id="password">
+                            </div>
+                            <button type="submit" class="form-control btn btn-primary">Login</button>
                         </form>
                     </div>
                 </div>
