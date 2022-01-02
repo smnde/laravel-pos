@@ -15,19 +15,19 @@ class RoleSeeder extends Seeder
     public function run()
     {
         $permissions = [
-            ['name' => 'lihat user', 'guard' => 'web'],
-            ['name' => 'tambah user', 'guard' => 'web'],
-            ['name' => 'tambah user', 'guard' => 'web'],
-            ['name' => 'hapus user', 'guard' => 'web'],
-            ['name' => 'lihat barang', 'guard' => 'web'],
-            ['name' => 'tambah barang', 'guard' => 'web'],
-            ['name' => 'edit barang', 'guard' => 'web'],
-            ['name' => 'hapus barang', 'guard' => 'web'],
-            ['name' => 'laporan', 'guard' => 'web'],
-            ['name' => 'cek riwayat', 'guard' => 'web'],
-            ['name' => 'penjualan', 'guard' => 'web'],
-            ['name' => 'pembelian', 'guard' => 'web'],
-            ['name' => 'pengembalian', 'guard' => 'web'],
+            ['name' => 'lihat user', 'guard_name' => 'web'],
+            ['name' => 'tambah user', 'guard_name' => 'web'],
+            ['name' => 'tambah user', 'guard_name' => 'web'],
+            ['name' => 'hapus user', 'guard_name' => 'web'],
+            ['name' => 'lihat barang', 'guard_name' => 'web'],
+            ['name' => 'tambah barang', 'guard_name' => 'web'],
+            ['name' => 'edit barang', 'guard_name' => 'web'],
+            ['name' => 'hapus barang', 'guard_name' => 'web'],
+            ['name' => 'laporan', 'guard_name' => 'web'],
+            ['name' => 'cek riwayat', 'guard_name' => 'web'],
+            ['name' => 'penjualan', 'guard_name' => 'web'],
+            ['name' => 'pembelian', 'guard_name' => 'web'],
+            ['name' => 'pengembalian', 'guard_name' => 'web'],
         ];
 
         Permission::insert($permissions);
