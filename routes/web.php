@@ -24,7 +24,7 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-Auth::routes();
+// Auth::routes();
 
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles', RolesController::class);
