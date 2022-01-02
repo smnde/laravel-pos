@@ -26,7 +26,7 @@
                         <h4 class="text-center text-white">Login</h4>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('login') }}" method="post">
+                        <form action="{{ route('auth.login') }}" method="post">
                             @csrf
                             <div class="mb-3">
                                 <label for="username" class="form-label">Username</label>
