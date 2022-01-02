@@ -5,36 +5,25 @@
         <div class="row">
             <div class="col-md-12 mx-auto">
                 <div class="card">
-                    <div class="card-header bg-primary">
-                        <div class="row">
-                            <div class="col-md-4 me-auto">
-                                <button type="button" class="btn btn-info btn-lg" data-bs-toggle="modal" data-bs-target="#productModal">
-                                    Cari Barang
-                                </button>
-                            </div>
-                            <div class="col-md-4 ms-auto">
-                                <div class="mb-0">
-                                    <input type="text" name="date" id="date" class="form-control" disabled value="{{ date('d-m-Y') }}">
+                    <form action="{{ route('purchases.save') }}" method="post">
+                        @csrf
+                        <div class="card-header bg-primary">
+                            <div class="row">
+                                <div class="col-md-4 me-auto">
+                                    <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#productModal">
+                                        Cari Barang
+                                    </button>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group mb-0">
+                                        <input type="text" aria-label="Last name" class="form-control" disabled value="Tanggal : {{ date('d-m-Y') }}">
+                                        <input type="text" name="invoice" id="invoice" class="form-control" readonly value="{{ $invoice }}">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <form action="{{ route('purchases.save') }}" id="savepurchases" method="post">
-                        @csrf
                         <div class="card-body">
                     </form>
-                    
-                            {{-- <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="invoice" class="form-label">Invoice</label>
-                                        <input type="text" name="invoice" id="invoice" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    
-                                </div>
-                            </div> --}}
                         <table class="table table-hover text-center">
                             <thead>
                                 <th>Aksi</th>

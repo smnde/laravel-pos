@@ -26,7 +26,13 @@ class PurchasesController extends Controller
     {
         $products = $this->product->getAll();
         $items = Cart::content();
-        return view('pages.purchases.index', compact('products', 'items'));
+        $invoice = IdGenerator::generate([
+            'table' => 'purchases',
+            'length' => 11,
+            'prefix' => 'INV-',
+            'field' => 'invoice',
+        ]);
+        return view('pages.purchases.index', compact('products', 'items', 'invoice'));
     }
 
     public function addProduct($id)
@@ -64,14 +70,6 @@ class PurchasesController extends Controller
 
     public function save(Request $request)
     {
-        $total = Cart::total();
-        $invoice = IdGenerator::generate([
-            'table' => 'purchases',
-            'length' => 10,
-            'prefix' => 'INV-',
-            'field' => 'invoice',
-        ]);
-
         DB::beginTransaction();
         try {
             $cart = Cart::content();
@@ -86,9 +84,9 @@ class PurchasesController extends Controller
             });
 
             $purchase = Purchase::create([
-                'invoice' => $invoice,
+                'invoice' => $request->invoice,
                 'user_id' => Auth::id(),
-                'total' => $total,
+                'total' => Cart::total(),
             ]);
 
             foreach ($items as $key => $item) {
