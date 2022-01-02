@@ -22,8 +22,8 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
                         <div class="card-body">
+                    </form>
                         <table class="table table-hover text-center">
                             <thead>
                                 <th>Aksi</th>
