@@ -15,19 +15,19 @@ class RoleSeeder extends Seeder
     public function run()
     {
         $permissions = [
-            ['name' => 'lihat user', 'guard_name' => 'web'],
-            ['name' => 'tambah user', 'guard_name' => 'web'],
-            ['name' => 'tambah user', 'guard_name' => 'web'],
-            ['name' => 'hapus user', 'guard_name' => 'web'],
-            ['name' => 'lihat barang', 'guard_name' => 'web'],
-            ['name' => 'tambah barang', 'guard_name' => 'web'],
-            ['name' => 'edit barang', 'guard_name' => 'web'],
-            ['name' => 'hapus barang', 'guard_name' => 'web'],
-            ['name' => 'laporan', 'guard_name' => 'web'],
-            ['name' => 'cek riwayat', 'guard_name' => 'web'],
-            ['name' => 'penjualan', 'guard_name' => 'web'],
-            ['name' => 'pembelian', 'guard_name' => 'web'],
-            ['name' => 'pengembalian', 'guard_name' => 'web'],
+            ['name' => 'lihat user'],
+            ['name' => 'tambah user'],
+            ['name' => 'tambah user'],
+            ['name' => 'hapus user'],
+            ['name' => 'lihat barang'],
+            ['name' => 'tambah barang'],
+            ['name' => 'edit barang'],
+            ['name' => 'hapus barang'],
+            ['name' => 'laporan'],
+            ['name' => 'cek riwayat'],
+            ['name' => 'penjualan'],
+            ['name' => 'pembelian'],
+            ['name' => 'pengembalian'],
         ];
 
         Permission::insert($permissions);
