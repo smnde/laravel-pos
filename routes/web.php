@@ -21,12 +21,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route('/login');
+    return redirect(route('login'));
 });
 
-// Auth::routes();
+Auth::routes();
 
 Route::group(['middleware' => 'auth'], function() {
+    Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
+
     Route::resource('/roles', RolesController::class);
     Route::resource('/users', UsersController::class)->except(['show']);
     
@@ -55,6 +57,4 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/sales/clear', [SalesController::class, 'clearCart'])->name('sales.clear');
     Route::post('/sales/increase/{id}', [SalesController::class, 'increase'])->name('sales.increase');
     Route::post('/sales/decrease/{id}', [SalesController::class, 'decrease'])->name('sales.decrease');
-    
-    Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 });
