@@ -44,6 +44,7 @@ class UserSeeder extends Seeder
             'edit barang',
             'hapus barang',
         ]);
+        
         $user = User::create([
             'name' => 'err',
             'username' => 'err',
