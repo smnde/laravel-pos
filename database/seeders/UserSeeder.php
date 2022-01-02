@@ -21,7 +21,6 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'lihat user']);
         Permission::create(['name' => 'tambah user']);
         Permission::create(['name' => 'edit user']);
-        Permission::create(['name' => 'edit user']);
         Permission::create(['name' => 'hapus user']);
         Permission::create(['name' => 'lihat barang']);
         Permission::create(['name' => 'tambah barang']);
@@ -30,21 +29,18 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'penjualan']);
         Permission::create(['name' => 'pembelian']);
         Permission::create(['name' => 'pengembalian']);
-        Permission::create(['name' => 'pembelian']);
         Permission::create(['name' => 'cek histori']);
 
         $role = Role::create(['name' => 'admin']);
-        $role->givPermissionTo([
-            'lihat user',
-            'tambah user',
-            'edit user',
-            'hapus user',
-            'lihat barang',
-            'tambah barang',
-            'edit barang',
-            'hapus barang',
-        ]);
-        
+        $role->givePermissionTo('lihat user');
+        $role->givePermissionTo('tambah user');
+        $role->givePermissionTo('edit user');
+        $role->givePermissionTo('hapus user');
+        $role->givePermissionTo('lihat barang');
+        $role->givePermissionTo('tambah barang');
+        $role->givePermissionTo('edit barang');
+        $role->givePermissionTo('hapus barang');
+
         $user = User::create([
             'name' => 'err',
             'username' => 'err',
